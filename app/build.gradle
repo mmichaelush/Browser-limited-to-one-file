@@ -2,7 +2,6 @@ plugins {
     id 'com.android.application'
 }
 
-
 android {
    signingConfigs {
         release {
@@ -12,24 +11,19 @@ android {
             keyPassword System.getenv("SIGNING_KEY_PASSWORD")
         }
     }
-    
+
     compileSdkVersion 34
 
     defaultConfig {
-        def allowGoogleLogin = System.getenv('ALLOW_GOOGLE_LOGIN') == 'true'
-        def baseDomains = System.getenv('ALLOWED_DOMAINS') ?: 'example.com'
-        def allowedDomains = allowGoogleLogin ? "${baseDomains},accounts.google.com" : baseDomains
-        buildConfigField "String", "ALLOWED_DOMAINS", "\"${allowedDomains}\""
-        buildConfigField "boolean", "ALLOW_GOOGLE_LOGIN", "${allowGoogleLogin}"
-        buildConfigField "String", "STARTUP_URL", "\"${System.getenv('STARTUP_URL') ?: '' }\""
+        buildConfigField "String", "CONTENT_MODE", "\"${System.getenv('CONTENT_MODE') ?: 'HTML'}\""
+        buildConfigField "String", "LOCAL_CONTENT_PATH", "\"${System.getenv('LOCAL_CONTENT_PATH') ?: 'content/index.html'}\""
         buildConfigField "String", "VIEW_MODE", "\"${System.getenv('VIEW_MODE') ?: 'AUTO'}\""
-        buildConfigField "boolean", "BLOCK_MEDIA", "${System.getenv('BLOCK_MEDIA') ?: 'false'}"
-        buildConfigField "boolean", "BLOCK_ADS", "${System.getenv('BLOCK_ADS') ?: 'true'}"
-        buildConfigField "boolean", "NO_SSL", "${System.getenv('NO_SSL') ?: 'false'}"
+        buildConfigField "boolean", "ENABLE_JAVASCRIPT", "${System.getenv('ENABLE_JAVASCRIPT') ?: 'false'}"
+
         resValue "string", "app_name", System.getenv('APP_NAME') ?: "My Application"
         applicationId System.getenv('APPLICATION_ID') ?: "com.webview.myapplication"
-        
-        minSdkVersion 16
+
+        minSdkVersion 21
         targetSdkVersion 34
         versionCode 1
         versionName "1.0"
@@ -53,7 +47,6 @@ android {
 }
 
 dependencies {
-
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.11.0'
     testImplementation 'junit:junit:4.13.2'
