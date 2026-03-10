@@ -20,7 +20,6 @@
 - להוסיף שדות `buildConfigField` חדשים ב־`app/build.gradle`:
   - `CONTENT_MODE` (`HTML`/`PDF`)
   - `LOCAL_CONTENT_PATH` (למשל `content/index.html`)
-  - `ALLOW_FILE_UPLOAD` (ברירת מחדל `false`)
 - כך אפשר לשנות תוכן בלי לגעת בלוגיקה.
 
 ### 1.3 UX לשגיאת טעינת קובץ מקומי
