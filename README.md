@@ -31,7 +31,6 @@ Then set `LOCAL_CONTENT_PATH` accordingly.
 - In `PDF` mode, `LOCAL_CONTENT_PATH` must point to a valid PDF file in `assets`.
 - In `HTML` mode, only local asset URLs are allowed for navigation.
 
-
 ## Build from GitHub UI (good for a static github.io frontend)
 You can run APK builds directly from **GitHub Actions** using the workflow:
 
@@ -56,7 +55,6 @@ Optional:
 - `SIGNING_STORE_PASSWORD`
 
 After build, the workflow uploads the APK as artifact and also creates a prerelease with the APK attached.
-
 
 ## Static github.io frontend (optional)
 You can publish a static UI from the `docs/` folder (GitHub Pages) and trigger the workflow remotely.
@@ -87,7 +85,6 @@ Then open your Pages URL and run builds via the form.
 For production rollout checklist, see:
 - `docs/DEPLOYMENT.md`
 
-
 ### API mode in static UI
 The `docs/` frontend now supports two modes:
 - **Direct GitHub API (PAT)**: sends requests directly to GitHub from the browser
@@ -106,7 +103,6 @@ Proxy example extras:
 > Security note: by default token is **not persisted**.
 > If you enable "remember token", it is saved to `localStorage` in that browser only.
 > For production/public usage, place a backend proxy between UI and GitHub API.
-
 
 ## CLI helpers (for fast operations)
 Two helper scripts were added:
@@ -131,7 +127,3 @@ GITHUB_TOKEN=ghp_xxx ./scripts/dispatch_workflow.sh \
   --local-content-path content/index.html \
   --view-mode AUTO \
   --enable-javascript false
-```
-
-## License
-This application is distributed under GNU GPL-3.0. See [LICENSE](LICENSE).
