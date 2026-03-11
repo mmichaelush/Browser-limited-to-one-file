@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Offline APK Builder</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background:#f5f7fb; color:#1f2937; }
+    .wrap { max-width: 920px; margin: 32px auto; background: #fff; border-radius: 12px; padding: 24px; box-shadow:0 8px 30px rgba(0,0,0,.08); }
+    h1 { margin-top: 0; }
+    .grid { display:grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .full { grid-column: 1 / -1; }
+    label { font-size: 14px; font-weight: 600; display:block; margin-bottom:4px; }
+    input, select { width:100%; padding:10px; border:1px solid #d1d5db; border-radius:8px; box-sizing: border-box; }
+    .row { margin-top: 10px; }
+    .btn { background:#2563eb; color:#fff; border:none; border-radius:10px; padding:12px 16px; cursor:pointer; font-weight:700; margin-inline-start: 6px; }
+    .btn.secondary { background:#334155; }
+    .btn:disabled { opacity:.5; cursor:not-allowed; }
+    .note { font-size: 13px; color:#475569; background:#f8fafc; border:1px solid #e2e8f0; padding:10px; border-radius:8px; }
+    pre { background:#0f172a; color:#e2e8f0; padding:12px; border-radius:8px; overflow:auto; }
+    .ok { color:#166534; }
+    .err { color:#991b1b; }
+    .muted { font-size:12px; color:#64748b; }
+    .checkbox-row { display:flex; gap:8px; align-items:center; margin-top:6px; }
+    .checkbox-row input { width:auto; }
+    .links a { margin-inline-start: 12px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>🚀 Offline APK Builder</h1>
+    <p>ממשק סטטי להפעלת GitHub Action: <code>🤖 Build Offline APK</code>.</p>
+
+    <div class="note">
+      לשימוש פרטי אפשר להזין PAT בדפדפן. לפרודקשן מומלץ לשים Proxy Backend.
+      הטוקן <strong>לא נשמר</strong> אלא אם מסמנים "זכור טוקן".
+    </div>
+
+    <div class="grid row">
+      <div>
+        <label>GitHub Owner</label>
+        <input id="owner" placeholder="mmichaelush" />
+      </div>
+      <div>
+        <label>Repository</label>
+        <input id="repo" placeholder="Browser-limited-to-one-file" />
+      </div>
+      <div class="full">
+        <label>Branch / Ref</label>
+        <input id="ref" value="main" />
+      </div>
+      <div class="full">
+        <label>API Mode</label>
+        <select id="api_mode">
+          <option value="direct" selected>Direct GitHub API (PAT)</option>
+          <option value="proxy">Proxy Backend (recommended)</option>
+        </select>
+      </div>
+      <div class="full" id="api_base_wrap" style="display:none">
+        <label>Proxy Base URL</label>
+        <input id="api_base" placeholder="https://your-proxy.example.com" />
+      </div>
+      <div class="full" id="proxy_key_wrap" style="display:none">
+        <label>Proxy API Key (optional, if your proxy requires it)</label>
+        <input id="proxy_api_key" type="password" placeholder="builder-secret" autocomplete="off" />
+      </div>
+      <div class="full" id="token_wrap">
+        <label>GitHub Token (PAT)</label>
+        <input id="token" type="password" placeholder="ghp_..." autocomplete="off" />
+        <div class="checkbox-row">
+          <input type="checkbox" id="remember_token" />
+          <label for="remember_token" style="margin:0">זכור טוקן בדפדפן הזה</label>
+        </div>
+      </div>
+    </div>
+
+    <hr class="row" />
+
+    <div class="grid row">
+      <div>
+        <label>request_id</label>
+        <input id="request_id" value="manual-run-001" />
+      </div>
+      <div>
+        <label>app_name</label>
+        <input id="app_name" value="My Offline App" />
+      </div>
+      <div>
+        <label>application_id</label>
+        <input id="application_id" value="com.webview.myapplication" />
+      </div>
+      <div>
+        <label>content_mode</label>
+        <select id="content_mode">
+          <option>HTML</option>
+          <option>PDF</option>
+        </select>
+      </div>
+      <div>
+        <label>local_content_path</label>
+        <input id="local_content_path" value="content/index.html" />
+      </div>
+      <div>
+        <label>view_mode</label>
+        <select id="view_mode">
+          <option>AUTO</option>
+          <option>PORTRAIT</option>
+          <option>LANDSCAPE</option>
+        </select>
+      </div>
+      <div>
+        <label>enable_javascript</label>
+        <select id="enable_javascript">
+          <option value="false" selected>false</option>
+          <option value="true">true</option>
+        </select>
+      </div>
+      <div>
+        <label>icon_url (optional)</label>
+        <input id="icon_url" placeholder="https://.../icon.png" />
+      </div>
+    </div>
+
+    <div class="row">
+      <button class="btn" id="runBtn">Run Workflow</button>
+      <button class="btn secondary" id="latestReleaseBtn">Latest APK Release</button>
+      <button class="btn secondary" id="latestRunBtn">Latest Workflow Run</button>
+      <button class="btn secondary" id="latestApkBtn">Latest APK Download</button>
+    </div>
+
+    <div class="row links muted" id="quickLinks"></div>
+
+    <div class="row">
+      <div id="status" class="note">מוכן להרצה.</div>
+    </div>
+
+    <div class="row">
+      <label>Payload</label>
+      <pre id="payload"></pre>
+    </div>
+  </div>
+
+  <script src="./main.js"></script>
+</body>
+</html>
