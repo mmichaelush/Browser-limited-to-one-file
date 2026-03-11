@@ -107,5 +107,31 @@ Proxy example extras:
 > If you enable "remember token", it is saved to `localStorage` in that browser only.
 > For production/public usage, place a backend proxy between UI and GitHub API.
 
+
+## CLI helpers (for fast operations)
+Two helper scripts were added:
+
+- `scripts/check_offline_builder.sh`
+  - Runs local sanity checks for workflow/app/docs consistency.
+- `scripts/dispatch_workflow.sh`
+  - Dispatches `build.yaml` workflow using GitHub API from terminal.
+
+Example:
+```bash
+./scripts/check_offline_builder.sh
+
+GITHUB_TOKEN=ghp_xxx ./scripts/dispatch_workflow.sh \
+  --owner mmichaelush \
+  --repo Browser-limited-to-one-file \
+  --ref main \
+  --request-id run-001 \
+  --app-name "My Offline App" \
+  --application-id com.example.offline \
+  --content-mode HTML \
+  --local-content-path content/index.html \
+  --view-mode AUTO \
+  --enable-javascript false
+```
+
 ## License
 This application is distributed under GNU GPL-3.0. See [LICENSE](LICENSE).
